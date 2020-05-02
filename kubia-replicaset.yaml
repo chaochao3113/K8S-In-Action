@@ -1,0 +1,17 @@
+apiVersion: apps/v1   #不是v1版本API的一部分 但属于appsAPI组的v1版本
+kind: ReplicaSet
+metadata:
+  name: kubia
+spec:
+  replicas: 3
+  selector:
+    matchLabels:       #这里使用了更简单的matchLabels选择器,这非常类似于ReplicationController的选择器
+      app: kubia
+  template:            #pod模板
+    metadata:
+      labels:
+        app: kubia
+    spec:
+      containers:
+      - name: kubia
+        image: luksa/kubia

@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: batch-job              #没有指定pod选择器(它将根据pod模板中的标签创建)
+spec:
+  template:
+    metadata:
+      labels:
+        app: batch-job
+    spec:
+      restartPolicy: OnFailure  #Job不能使用Always为默认的重新启动策略
+      containers:
+      - name: main
+        image: luksa/batch-job

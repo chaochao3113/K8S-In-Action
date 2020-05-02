@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ReplicationController   #定义一个ReplicationController(rc)
+metadata:
+  name: kubia           #ReplicationController的名字
+spec:
+  replicas: 3           #pod实例的目标数目
+  selector: 
+    app: kubia         #pod选择器决定了rc的操作对象
+  template:            #创建新的pod所用的pod模板
+    metadata:
+      labels:
+        app: kubia     #带有这个标签的pod受kubia-rc的控制
+    spec:
+      containers:
+      - name: kubia
+        image: luksa/kubia
+        ports:
+        - containerPort: 8080

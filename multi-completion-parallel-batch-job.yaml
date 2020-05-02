@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: multi-completion-parallel-batch-job
+spec:
+  completions: 5  #这项任务必须确保五个pod成功完成
+  parallelism: 2     #最多两个pod可以并行运行
+  template:
+    metadata:
+      labels:
+        app: batch-job
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: main
+        image: luksa/batch-job

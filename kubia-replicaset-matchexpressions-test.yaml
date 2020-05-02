@@ -1,0 +1,24 @@
+apiVersion: apps/v1   #不是v1版本API的一部分 但属于appsAPI组的v1版本
+kind: ReplicaSet
+metadata:
+  name: kubia
+spec:
+  replicas: 3
+  selector:
+    matchExpressions:
+      - key: app          #此选择器要求该pod包含"app"标签
+        operator: In      #标签的值必须与其中一个指定的values匹配
+        values:
+          - kubia
+          - foo
+      - key: type
+        operator: Exists
+  template:            #pod模板
+    metadata:
+      labels:
+        app: kubia
+        type: test
+    spec:
+      containers:
+      - name: kubia
+        image: luksa/kubia
