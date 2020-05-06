@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: external-service  #服务的名字必须和Endpoint对象的名字相匹配
+spec:             # 服务中没有定义选择器
+  ports:
+  = port: 80
