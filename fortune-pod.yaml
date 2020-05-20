@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fortune
+spec:
+  containers:
+  - image: luksa/fortune  ## 第一个容器名为html-generator,运行luksa/fortune镜像
+    name: html-generator
+    volumeMounts:
+    - name: html   ## 名为html的卷挂载在容器的/var/htdocs中
+      mountPath: /var/htdocs
+  - image: nginx:alpine  ## 第二个容器称为web-server,运行nginx:alpine镜像
+    name: web-server
+    volumeMounts:
+    - name: html     ## 与上面相同的卷挂载在/usr/share/nginx/html上,设为只读
+      mountPath: /usr/share/nginx/html
+      readOnly: true
+    ports:
+    - containerPort: 80
+      protocol: TCP
+  volumes:
+  - name: html  ## 一个名为html的单独emptyDir卷,挂载在上面两个容器中
+    emptyDir: {}
